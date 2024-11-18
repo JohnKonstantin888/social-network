@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/user/register}" method="post" th:object="${userDto}">
+    <div>
+        <span id="userNameSpan">Имя</span>
+        <input th:field="*{username}" type="text" name="userName" id="userName">
+    </div>
+    <div>
+        <span id="lastNameSpan">Фамилия</span>
+        <input th:field="*{lastName}" type="text" name="lastName" id="lastName">
+    </div>
+    <div>
+        <span id="birthDateSpan">Дата Рождения</span>
+        <input th:field="*{birthDate}" type="date" name="birthDate" id="birthDate">
+    </div>
+    <div class="input-group mb-3">
+        <label for="gender">Пол:</label>
+        <select id="gender" th:field="*{gender}" required>
+            <option value="" disabled selected>Выберите пол</option>
+            <option value="MALE">Мужской</option>
+            <option value="FEMALE">Женский</option>
+        </select>
+    </div>
+    <div>
+        <span id="citySpan">Город</span>
+        <input th:field="*{city}" type="text" name="city" id="city">
+    </div>
+    <div>
+        <span id="emailSpan">Логин/Email</span>
+        <input th:field="*{email}" type="email" name="email" id="email">
+    </div>
+    <div>
+        <span id="passwordSpan">Пароль</span>
+        <input th:field="*{password}" type="password" name="password" id="password">
+    </div>
+    <div>
+        <span id="hobbiesSpan">Увлечения(через запятую)</span>
+        <input th:field="*{hobbies}" type="text" name="hobbies" id="hobbies">
+    </div>
+    <input type="submit" value="Зарегистрироваться">
+</form>
+</body>
+</html>
