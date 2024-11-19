@@ -14,10 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -53,14 +50,17 @@ public class UserCore {
             if (StringUtils.isBlank(dto.getEmail())) {
                 throw new EmptyRequiredFieldException("Login");
             }
+            Optional<AppUser> optional = userRepository.findByEmail(dto.getEmail());
             AppUser user = null;
             if (StringUtils.isNotBlank(dto.getId())) {
                 Optional<AppUser> optionalUser = userRepository.findById(UUID.fromString(dto.getId()));
                 if (optionalUser.isPresent()) {
+                    if (optional.isPresent() && !Objects.equals(optionalUser.get().getId(), optional.get().getId())) {
+                        throw new UserWithLoginAlreadyExistsException(dto.getEmail());
+                    }
                     user = optionalUser.get();
                 }
             } else {
-                Optional<AppUser> optional = userRepository.findByEmail(dto.getEmail());
                 if (optional.isPresent()) {
                     throw new UserWithLoginAlreadyExistsException(dto.getEmail());
                 }
